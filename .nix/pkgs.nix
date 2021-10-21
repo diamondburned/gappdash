@@ -1,0 +1,18 @@
+{ systemChannel ? <nixpkgs> }:
+
+let systemPkgs = import systemChannel {
+		overlays = [ (import ./overlay.nix) ];
+	};
+	lib = systemPkgs.lib;
+
+	src  = import ./src.nix;
+	pkgs = import src.nixpkgs {
+		overlays = [ (import ./overlay.nix) ];
+	};
+
+in
+	if (lib.versionAtLeast systemPkgs.gnome.gtk3.version "3.27.24")
+	# Prefer the system's Nixpkgs if it's new enough.
+	then systemPkgs
+	# Else, fetch our own.
+	else pkgs

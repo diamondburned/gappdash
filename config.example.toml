@@ -1,0 +1,35 @@
+[gappdash]
+# mode sets whether to list applications in a grid or list.
+mode = "grid" # or "list"
+# daemonize, if true, will ensure that the GApplication stays in the background
+# if the window is closed the first time. This reduces startup time
+# significantly after the first time.
+daemonize = true
+# index-age determines the maximum age for indexing application files. Once the
+# index expires, spawning the window will still use the old index until the
+# background task can finish renewing the index.
+index-age = 5m
+# fuzzy, if true, will search for applications using fuzzy searching instead of
+# regular substring searching.
+fuzzy = true
+# case-sensitive, if true, will treat upper-case letters the same as lower-case
+# letters.
+case-sensitive = false
+
+[layer-shell]
+# enable, if false, will make the gappdash window a regular window instead of an
+# overlay. The regular window will have a titlebar.
+enable = true
+# layer can be "overlay", "top", "bottom", or "background".
+layer = "overlay"
+# anchors contains a list of edges to which the window will stick onto. Listing
+# all 4 means in the middle (or fullscreen).
+anchors = [ "top", "bottom", "left", "right" ]
+# margins contains the margins for all 4 edges.
+margins = { top = 0, bottom = 0, left = 0, right = 0 }
+
+[window]
+# width sets the width of the window, or 0 for fullscreen.
+width  = 600
+# height sets the height of the window, or 0 for fullscreen.
+height = 400

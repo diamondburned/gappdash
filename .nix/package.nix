@@ -24,6 +24,7 @@ in internalPkgs.buildGoModule {
 	buildInputs = with internalPkgs; [
 		gnome.gtk3
 		glib
+		gtk-layer-shell
 		gdk-pixbuf
 		gobjectIntrospection
 	];

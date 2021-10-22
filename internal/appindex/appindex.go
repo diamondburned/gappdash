@@ -2,22 +2,21 @@
 package appindex
 
 import (
-	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 
 	"github.com/diamondburned/gappdash/internal/desktopentry"
-	"github.com/rkoesters/xdg/desktop"
+	"github.com/diamondburned/gotk4/pkg/gio/v2"
 )
 
-// Index is the application indexer.
+// Index is the application indexer. All its methods are thread-safe.
 type Index struct {
 	Searcher Searcher
 	MaxAge   time.Duration
 	SortType desktopentry.EntrySortType
 
-	searchResults []desktop.Entry
+	searchResults []gio.AppInfor
 
 	mutex   sync.Mutex
 	entries entryIndex
@@ -26,7 +25,7 @@ type Index struct {
 }
 
 type entryIndex struct {
-	entries       []desktop.Entry
+	entries       []gio.AppInfor
 	searchEntries []string
 	lastIndexed   time.Time
 }
@@ -35,18 +34,28 @@ type entryIndex struct {
 func NewIndex(searcher Searcher) *Index {
 	return &Index{
 		Searcher:      searcher,
-		MaxAge:        10 * time.Second,
-		searchResults: make([]desktop.Entry, 0, 50),
+		MaxAge:        30 * time.Minute,
+		SortType:      desktopentry.EntrySortedModTimeReverse,
+		searchResults: make([]gio.AppInfor, 0, 50),
 	}
 }
 
+// AllEntries returns all entries.
+func (i *Index) AllEntries() []gio.AppInfor {
+	i.mutex.Lock()
+	defer i.mutex.Unlock()
+
+	return i.entries.entries
+}
+
 // Search searches the index for the given query.
-func (i *Index) Search(query string) []desktop.Entry {
+func (i *Index) Search(query string) []gio.AppInfor {
 	i.mutex.Lock()
 	defer i.mutex.Unlock()
 
 	if i.entries.lastIndexed.Add(i.MaxAge).Before(time.Now()) && !i.reindexing {
 		// Expired. Queue a reindexing.
+		i.reindexing = true
 		go i.asyncReindex(func() { i.reindexing = false })
 	}
 
@@ -58,18 +67,10 @@ func (i *Index) Search(query string) []desktop.Entry {
 	return i.searchResults
 }
 
-// ForceReindex forces the index to be reindexed synchronously. This method is
-// safe to be called concurrently.
-func (i *Index) ForceReindex() {
+// Reindex forces the index to be reindexed synchronously.
+func (i *Index) Reindex() {
 	i.asyncReindex(nil)
 }
-
-// func (i *Index) reindexLocked() {
-// 	i.mutex.Lock()
-// 	i.forceReindex(&i.entries)
-// 	i.Searcher.Index(i.entries.searchEntries)
-// 	i.mutex.Unlock()
-// }
 
 func (i *Index) asyncReindex(then func()) {
 	// TODO: reuse a buffer.
@@ -90,7 +91,7 @@ func (i *Index) asyncReindex(then func()) {
 }
 
 func forceReindex(sortType desktopentry.EntrySortType, idx *entryIndex) {
-	idx.entries, _ = desktopentry.List(sortType)
+	idx.entries = desktopentry.List(sortType)
 
 	if cap(idx.searchEntries) >= len(idx.entries) {
 		idx.searchEntries = idx.searchEntries[:0]
@@ -105,22 +106,12 @@ func forceReindex(sortType desktopentry.EntrySortType, idx *entryIndex) {
 	idx.lastIndexed = time.Now()
 }
 
-func buildEntryQuery(entry desktop.Entry) string {
+func buildEntryQuery(entry gio.AppInfor) string {
 	list := []string{
-		entry.Name,
-		entry.GenericName,
-		entry.Comment,
-		strings.Join(entry.Keywords, " "),
-		strings.Join(entry.Categories, " "),
-		execBase(entry.Exec),
+		entry.DisplayName(),
+		entry.Description(),
+		entry.Executable(),
 	}
 
 	return strings.Join(list, " ")
-}
-
-func execBase(exec string) string {
-	if exec == "" {
-		return exec
-	}
-	return filepath.Base(strings.Split(exec, " ")[0])
 }

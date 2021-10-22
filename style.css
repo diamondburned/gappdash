@@ -1,0 +1,48 @@
+.gappdash-window {
+	background-color: alpha(@theme_bg_color, .5);
+}
+
+.search-entry {
+	margin: 0;
+	min-width: 500px;
+	background-color: alpha(@theme_bg_color, 1);
+}
+
+.search-entry-box {
+	min-height: 60px;
+	background-color: alpha(@theme_bg_color, .5);
+}
+
+.app-grid {
+	margin: 0 50px;
+	margin-top: 60px;
+}
+
+.app-grid > flowboxchild {
+	min-width:  120px;
+	min-height: 120px;
+	padding: 0;
+	border-radius: 0;
+}
+
+.app-grid > flowboxchild:selected {
+	border: none;
+	outline: none;
+	background-color: alpha(@theme_selected_bg_color, 0.35);
+}
+
+.app-grid .grid-item.hover {
+	background-color: alpha(@theme_selected_bg_color, 0.15);
+}
+
+.app-grid .grid-item label {
+	margin: 4px 1em;
+}
+
+.app-grid .grid-item image {
+	margin-bottom: 1.5em;
+}
+
+.app-grid .grid-item.hover image {
+	opacity: 0.75;
+}

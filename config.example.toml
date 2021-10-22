@@ -8,13 +8,19 @@ daemonize = true
 # index-age determines the maximum age for indexing application files. Once the
 # index expires, spawning the window will still use the old index until the
 # background task can finish renewing the index.
-index-age = 5m
+index-age = "15m"
 # fuzzy, if true, will search for applications using fuzzy searching instead of
 # regular substring searching.
 fuzzy = true
 # case-sensitive, if true, will treat upper-case letters the same as lower-case
-# letters.
+# letters. This is only useful if fuzzy is false.
 case-sensitive = false
+# icon-size determines the size of each icon to appear in the grid/list.
+icon-size = 52
+
+[gappdash.grid]
+max-children-per-line = 6
+min-children-per-line = 6
 
 [layer-shell]
 # enable, if false, will make the gappdash window a regular window instead of an
@@ -30,6 +36,6 @@ margins = { top = 0, bottom = 0, left = 0, right = 0 }
 
 [window]
 # width sets the width of the window, or 0 for fullscreen.
-width  = 600
+width  = 1000
 # height sets the height of the window, or 0 for fullscreen.
-height = 400
+height = 700

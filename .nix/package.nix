@@ -20,7 +20,7 @@ in internalPkgs.buildGoModule {
 	pname = "gappdash";
 	version = "0.0.1-tip";
 
-	buildInputs = with internalPkgs; [
+	buildInputs = with pkgs; [
 		gnome.gtk3
 		glib
 		gtk-layer-shell
@@ -28,7 +28,10 @@ in internalPkgs.buildGoModule {
 		gobjectIntrospection
 	];
 
-	nativeBuildInputs = with pkgs; [ pkgconfig ];
+	nativeBuildInputs = with pkgs; [
+		pkgconfig
+		wrapGAppsHook
+	];
 
 	preFixup = ''
 		mkdir -p $out/share/icons/hicolor/256x256/apps/ $out/share/applications/

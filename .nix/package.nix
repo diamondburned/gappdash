@@ -3,6 +3,7 @@
 	lib,
 	pkgs,
 	internalPkgs ? import ./pkgs.nix {}, # only for overriding
+	vendorSha256 ? lib.fakeSha256,
 }:
 
 let desktopFile = pkgs.makeDesktopItem {
@@ -13,13 +14,10 @@ let desktopFile = pkgs.makeDesktopItem {
 };
 
 in internalPkgs.buildGoModule {
-	inherit src;
+	inherit src vendorSha256;
 
 	pname = "gappdash";
 	version = "0.0.1-tip";
-
-	# Bump this on go.mod change.
-	# vendorSha256 = "1v8mlawbl011696xlw839s9j956pyygpff924v1zbq3bpfylxqp4";
 
 	buildInputs = with internalPkgs; [
 		gnome.gtk3

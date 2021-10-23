@@ -9,7 +9,7 @@
 let desktopFile = pkgs.makeDesktopItem {
     desktopName = "Application Dash";
 	name = "GAppDash";
-	icon = "gappdash";
+	# icon = "gappdash";
 	exec = "gappdash";
 };
 
@@ -31,9 +31,6 @@ in internalPkgs.buildGoModule {
 
 	preFixup = ''
 		mkdir -p $out/share/icons/hicolor/256x256/apps/ $out/share/applications/
-		# Install the desktop file
 		cp "${desktopFile}"/share/applications/* $out/share/applications/
-		# Install the icon
-		cp "${../.github/logo-256.png}" $out/share/icons/hicolor/256x256/apps/gotktrix.png
 	'';
 }

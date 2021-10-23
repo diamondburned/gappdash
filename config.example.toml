@@ -27,7 +27,7 @@ min-children-per-line = 6
 # overlay. The regular window will have a titlebar.
 enable = true
 # layer can be "overlay", "top", "bottom", or "background".
-layer = "overlay"
+layer = "top"
 # anchors contains a list of edges to which the window will stick onto. Listing
 # all 4 means in the middle (or fullscreen).
 anchors = [ "top", "bottom", "left", "right" ]

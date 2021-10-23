@@ -110,6 +110,8 @@ func openWindow() *window {
 
 	if lshell := app.cfg.LayerShell; lshell.Enable {
 		gtklayershell.InitForWindow(&w.Window)
+		gtklayershell.SetKeyboardInteractivity(&w.Window, true)
+		gtklayershell.SetKeyboardMode(&w.Window, gtklayershell.LayerShellKeyboardModeExclusive)
 		gtklayershell.SetLayer(&w.Window, lshell.Layer.Layer())
 		for _, anchor := range lshell.Anchors {
 			gtklayershell.SetAnchor(&w.Window, anchor.Edge(), false)
@@ -173,8 +175,15 @@ func openWindow() *window {
 
 		stack.SetVisibleChild(grid)
 
+		iconSize := int(app.cfg.App.StockIconSize())
+
 		for i, entry := range entries {
-			icon := gtk.NewImageFromGIcon(entry.Icon(), int(app.cfg.App.StockIconSize()))
+			var icon *gtk.Image
+			if gicon := entry.Icon(); gicon != nil {
+				icon = gtk.NewImageFromGIcon(gicon, iconSize)
+			} else {
+				icon = gtk.NewImageFromIconName("image-missing", iconSize)
+			}
 			name := entry.DisplayName()
 
 			label := gtk.NewLabel(name)

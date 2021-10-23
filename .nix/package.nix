@@ -1,8 +1,8 @@
 {
-	src ? ./..,
-	lib,
-	pkgs,
 	internalPkgs ? import ./pkgs.nix {}, # only for overriding
+	pkgs ? internalPkgs,
+	lib ? pkgs.lib,
+	src ? ./..,
 	vendorSha256 ? lib.fakeSha256,
 }:
 

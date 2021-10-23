@@ -11,7 +11,10 @@ let systemPkgs = import systemChannel {
 	};
 
 in
-	if (lib.versionAtLeast systemPkgs.gnome.gtk3.version "3.27.24")
+	if (
+		(lib.versionAtLeast systemPkgs.gnome.gtk3.version "3.27.24") &&
+		(lib.versionAtLeast systemPkgs.go.version "1.17")
+	)
 	# Prefer the system's Nixpkgs if it's new enough.
 	then systemPkgs
 	# Else, fetch our own.

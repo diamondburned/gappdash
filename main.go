@@ -267,11 +267,15 @@ func openWindow() *window {
 	w.SetDeletable(false)
 	w.ShowAll()
 
-	// w.ConnectAfter("key-press-event", func(key *gdk.EventKey) bool {
-	// 	log.Println("keyVal =", key.Keyval())
-	// 	return false
-	// 	// return true
-	// })
+	w.ConnectAfter("key-press-event", func(event *gdk.Event) bool {
+		switch keyEvent := event.AsKey(); keyEvent.Keyval() {
+		case gdk.KEY_Escape:
+			shutWindow()
+			return true
+		}
+
+		return false
+	})
 
 	return &window{
 		ApplicationWindow: w,
@@ -287,6 +291,7 @@ func shutWindow() {
 	}
 
 	app.window.Hide()
+	app.window.entry.SetText("")
 }
 
 func multilineLabel(label *gtk.Label) {

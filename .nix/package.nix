@@ -3,6 +3,7 @@
 	pkgs ? internalPkgs,
 	lib ? pkgs.lib,
 	src ? ./..,
+	doCheck ? false,
 	vendorSha256 ? lib.fakeSha256,
 }:
 
@@ -14,7 +15,7 @@ let desktopFile = pkgs.makeDesktopItem {
 };
 
 in internalPkgs.buildGoModule {
-	inherit src vendorSha256;
+	inherit src doCheck vendorSha256;
 
 	pname = "gappdash";
 	version = "0.0.1-tip";

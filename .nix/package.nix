@@ -2,7 +2,7 @@
 	internalPkgs ? import ./pkgs.nix {}, # only for overriding
 	pkgs ? internalPkgs,
 	lib ? pkgs.lib,
-	src ? ./..,
+	src ? null,
 	doCheck ? false,
 	vendorSha256 ? lib.fakeSha256,
 }:
@@ -22,17 +22,21 @@ in internalPkgs.buildGoModule {
 
 	buildInputs = with pkgs; [
 		gnome.gtk3
-		glib
 		gtk-layer-shell
 		gdk-pixbuf
 		gobjectIntrospection
 		librsvg
+
+		glib
 		gnome3.defaultIconTheme
 	];
 
 	nativeBuildInputs = with pkgs; [
 		pkgconfig
+
 		wrapGAppsHook
+		glib
+		gnome3.defaultIconTheme
 	];
 
 	preFixup = ''

@@ -16,8 +16,6 @@ import (
 const appID = "com.github.diamondburned.gappdash"
 
 func main() {
-	glib.LogUseDefaultLogger()
-
 	app := gtk.NewApplication(appID, 0)
 	app.Connect("activate", activate)
 
@@ -39,6 +37,8 @@ var app struct {
 
 func activate(gapp *gtk.Application) {
 	if app.Application == nil {
+		glib.LogUseDefaultLogger()
+
 		app.Application = gapp
 
 		initStyles()

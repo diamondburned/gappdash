@@ -8,10 +8,10 @@
 }:
 
 let desktopFile = pkgs.makeDesktopItem {
-    desktopName = "Application Dash";
+    desktopName = "Application Launcher";
 	name = "GAppDash";
-	# icon = "gappdash";
 	exec = "gappdash";
+	icon = "start-here";
 };
 
 in internalPkgs.buildGoModule {
@@ -26,6 +26,8 @@ in internalPkgs.buildGoModule {
 		gtk-layer-shell
 		gdk-pixbuf
 		gobjectIntrospection
+		librsvg
+		gnome3.defaultIconTheme
 	];
 
 	nativeBuildInputs = with pkgs; [

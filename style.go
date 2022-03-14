@@ -34,8 +34,8 @@ func initStyles() {
 	}
 
 	manager := gdk.DisplayManagerGet()
-	manager.ConnectDisplayOpened(func(display gdk.Display) {
-		styleNewDisplay(&display)
+	manager.ConnectDisplayOpened(func(display *gdk.Display) {
+		styleNewDisplay(display)
 	})
 	for _, display := range manager.ListDisplays() {
 		styleNewDisplay(&display)

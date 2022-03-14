@@ -1,8 +1,8 @@
 github.com/diamondburned/gotk4-layer-shell/pkg v0.0.0-20211020055130-188209233f34 h1:gK/b6ougXDXA430JVIn6MZmUjNlckYfO/ua+Q9BtyiQ=
 github.com/diamondburned/gotk4-layer-shell/pkg v0.0.0-20211020055130-188209233f34/go.mod h1:o7zUFCPEim04GUBpXgIbTwP1IRJFUh0A53ETRsrWIj4=
 github.com/diamondburned/gotk4/pkg v0.0.0-20211001041545-5d7eec322a59/go.mod h1:dJ2gfR0gvBsGg4IteP8aMBq/U5Q9boDw0DP7kAjXTwM=
-github.com/diamondburned/gotk4/pkg v0.0.0-20211023032558-d16c0d1523ab h1:q1A0Ze45OAikG47oEZ6mBKhwnv/zfFIcoqXnWCJ2NhQ=
-github.com/diamondburned/gotk4/pkg v0.0.0-20211023032558-d16c0d1523ab/go.mod h1:dJ2gfR0gvBsGg4IteP8aMBq/U5Q9boDw0DP7kAjXTwM=
+github.com/diamondburned/gotk4/pkg v0.0.0-20220305042118-cfb7981704dc h1:huKiZ5uLa7CSX7zrpT+pXwQ7dHzyv3qHNqgvnsg1yNQ=
+github.com/diamondburned/gotk4/pkg v0.0.0-20220305042118-cfb7981704dc/go.mod h1:dJ2gfR0gvBsGg4IteP8aMBq/U5Q9boDw0DP7kAjXTwM=
 github.com/kylelemons/godebug v1.1.0 h1:RPNrshWIDI6G2gRW9EHilWtl7Z6Sb1BR0xunSBf0SNc=
 github.com/kylelemons/godebug v1.1.0/go.mod h1:9/0rRGxNHcop5bhtWyNeEfOS8JIWk580+fNqagV/RAw=
 github.com/pelletier/go-toml v1.9.4 h1:tjENF6MfZAg8e4ZmZTeWaWiT2vXtsoO6+iuOjFhECwM=

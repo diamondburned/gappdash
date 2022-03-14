@@ -165,7 +165,7 @@ func openWindow() *window {
 	update := func() {
 		// Remove all children.
 		for _, widget := range grid.Children() {
-			widget.BaseWidget().Destroy()
+			gtk.BaseWidget(widget).Destroy()
 		}
 
 		if len(entries) == 0 {
@@ -325,14 +325,14 @@ func noResultsPage() gtk.Widgetter {
 }
 
 func addCSSClass(w gtk.Widgetter, classes ...string) {
-	ctx := w.BaseWidget().StyleContext()
+	ctx := gtk.BaseWidget(w).StyleContext()
 	for _, class := range classes {
 		ctx.AddClass(class)
 	}
 }
 
 func removeCSSClass(w gtk.Widgetter, classes ...string) {
-	ctx := w.BaseWidget().StyleContext()
+	ctx := gtk.BaseWidget(w).StyleContext()
 	for _, class := range classes {
 		ctx.RemoveClass(class)
 	}
